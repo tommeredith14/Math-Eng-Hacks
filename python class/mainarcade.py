@@ -3,7 +3,7 @@ import random
 pygame.init()
 import Enemy_Bullet_Classes
 from Enemy_Bullet_Classes import *
-
+#pygame.mixer.music.load('Cave_Story')
 
 #Colours
 BLACK = [  0,  0,  0]
@@ -42,6 +42,10 @@ class Tile(pygame.sprite.Sprite):
 
         self.tiletype=tiletype
         self.rect=self.image.get_rect()
+    def switchType(self, newType):
+        self.tiletype=newType
+        self.image=pygame.image.load(OBSTACLE_PNG[newType]).convert()
+        self.image = pygame.transform.scale2x(self.image)
 
 class Map():
     def __init__(self,tilelist):
@@ -63,11 +67,22 @@ class Map():
                 explosive_object.add(currenttile)
             if(self.tilelist[tile]==4):
                 drowning_object.add(currenttile)
+    def update(self):
+        bystander_object.empty()
+        immutable_object.empty()
+        explosive_object.empty()
+        drowning_object.empty()
+        self.draw_map()
+            
 
             
             
             
         
+
+    
+
+    
         
 
 
@@ -83,6 +98,7 @@ def main():
     count = 0
     screen.fill(GREY)
     tilelist=[]
+    
     def map_one(tilelist):
         for i in range(0,1560):
             tilelist.append(0)
@@ -113,10 +129,25 @@ def main():
                 tilelist[i]=1
             elif (i>1040 and i<1092) or (i>676 and i<728) :
                 tilelist[i]=3
-                
+
+
+    
+    
     map_one(tilelist)
     backgroundmap = Map(tilelist)
     backgroundmap.draw_map()
+
+    #Collisions
+    def bullet_collisions(bullet_list,enemy_list):
+        hit_list=pygame.sprite.groupcollide(bullet_list,immutable_object,1,0)
+        hit_list=pygame.sprite.groupcollide(destructible_object,bullet_list,0,1)
+        for key in hit_list:
+            destructible_object.remove(key)
+            key.switchType(0)
+            bystander_object.add(key)
+        
+            
+            
 
     bullet_list=pygame.sprite.Group()
     enemy_list=pygame.sprite.Group()
@@ -129,17 +160,25 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-       
+        if count%10==0:
+            enemy.fireBullet()
+        
+            
+        bullet_list.update()
+        bullet_collisions(bullet_list, enemy_list)
+        
+        bullet_list.draw(screen)
+        enemy_list.draw(screen)
+        
         immutable_object.draw(screen)
         destructible_object.draw(screen)
         bystander_object.draw(screen)
         explosive_object.draw(screen)
         drowning_object.draw(screen)
-        if count%10==0:
-            enemy.fireBullet()
-        bullet_list.update()
         bullet_list.draw(screen)
-        enemy_list.draw(screen)
+        enemy_list.draw(screen)        
+        
+        
         count+=1
         
         
