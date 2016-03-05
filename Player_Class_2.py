@@ -64,7 +64,7 @@ class Turret(pygame.sprite.Sprite):
 
 # Sets up the image and Rect
         self.image = pygame.image.load("tankGun.png").convert_alpha()
-        self.image.set_colorkey(WHITE)
+        self.image.set_colorkey([0,0,0,0])
         self.rect = self.image.get_rect()
         self.rect.centerx = size[0] / 2
         self.rect.centery = size[1] / 2
@@ -85,7 +85,7 @@ class Tank(pygame.sprite.Sprite):
 
 # Sets up the image and Rect
         self.image = pygame.image.load("Chassis.png").convert_alpha()
-        self.image.set_colorkey(WHITE)
+        self.image.set_colorkey([0,0,0,0])
         self.rect = self.image.get_rect()
         self.rect.centerx = size[0] / 2
         self.rect.centery = size[1] / 2
