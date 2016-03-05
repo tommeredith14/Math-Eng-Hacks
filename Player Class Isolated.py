@@ -4,17 +4,9 @@ import math
 
 pygame.init()
 
-size = [1560, 900]
-screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Will Clark's Game")
-
-BLACK = (  0,   0,   0)
 WHITE = (255, 255, 255)
-RED   = (255,   0,   0)
 
 RESPONSE = 0.005
-
-clock = pygame.time.Clock()
 
 class Turret(pygame.sprite.Sprite):
     def __init__(self):
@@ -35,6 +27,9 @@ class Turret(pygame.sprite.Sprite):
         self.rect.centery = ypos
         self.bitmap = pygame.transform.rotate(self.bitmap2, angle)
         self.rect = self.bitmap.get_rect(center=self.rect.center)
+
+
+
 
 class Tank(pygame.sprite.Sprite):
     def __init__(self, bullet_list):
@@ -120,8 +115,6 @@ class Tank(pygame.sprite.Sprite):
             if (self.speedx > 200 or self.speedy > 200):
                 self.angle = math.atan2(self.speedx, self.speedy) * 180 / math.pi
 
-            #self.bitmap = pygame.transform.rotate(self.bitmap2, self.angle)
-
             if (self.collideImmutable(immutable_list) or self.collideDestructable(destructable_list) == 2):
                 self.rect.centerx = oldxpos
                 self.rect.centery = oldypos
@@ -133,26 +126,3 @@ class Tank(pygame.sprite.Sprite):
     def render(self):
         screen.blit(self.bitmap, (self.rect))
         screen.blit(self.turret.bitmap, (self.turret.rect))
-
-
-screen.fill(RED)
-
-tank = Tank(14)
-
-immut = pygame.sprite.Group()
-destruct = pygame.sprite.Group()
-
-done = False
-while done == False:
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True
-
-    tank.update(immut, destruct)
-    tank.render()
-    
-    pygame.display.flip()
-    clock.tick(20)
-    
-pygame.quit()
