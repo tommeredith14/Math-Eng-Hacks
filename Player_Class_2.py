@@ -110,9 +110,9 @@ class Tank(pygame.sprite.Sprite):
     def inputFromController(self, xjoy, yjoy, turret_rot):
         self.accelx = xjoy
         self.accely = yjoy
-        if (turret.rot == "L"):
+        if (turret_rot == "L"):
             self.turret_rot = 1
-        elif (turret.rot == "R"):
+        elif (turret_rot == "R"):
             self.turret_rot = -1
         else:
             self.turret_rot = 0
