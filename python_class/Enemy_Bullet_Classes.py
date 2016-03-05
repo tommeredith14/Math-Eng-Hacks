@@ -115,7 +115,7 @@ class Tank(pygame.sprite.Sprite):
         self.coll_Immutable = False
         self.coll_Destructible = False
         self.coll_Drowning = False
-        Self.coll_Fire = False
+        self.coll_Fire = False
         
 
         self.turret = Turret(x_pos, y_pos)
