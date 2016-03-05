@@ -374,6 +374,8 @@ def main():
         drowning_object.draw(screen)
         bullet_list.draw(screen)
         enemy_list.draw(screen)
+        
+        if player.
 
 
         SetLights(math.ceil(8* (player.health / 1000)))

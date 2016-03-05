@@ -310,6 +310,7 @@ def main():
     count=0
     enemy2=Enemy(300,100,enemy_list,bullet_list,4)
     player = Tank(bullet_list, START_X, START_Y)
+    endExplosion = Explosion()
     
     while not done:
         for event in pygame.event.get():
@@ -320,8 +321,6 @@ def main():
 
         
         player.update()        
-
-
             
         bullet_list.update()
         enemy_list.update()
@@ -353,8 +352,11 @@ def main():
         
         count+=1
 
-        pygame.draw.rect(screen, RED, (650, 45, 200 * (player.health / 1000), 30))
-        pygame.draw.rect(screen, RED, (650, 45, 200, 30), 5)
+        if player.still_alive = false:
+            endExplosion.updateExplode(screen, player.self.rect.centerx, player.self.rect.centery)
+
+        pygame.draw.rect(screen, RED, (650, 15, 200 * (player.health / 1000), 30))
+        pygame.draw.rect(screen, RED, (650, 15, 200, 30), 5)
         
         pygame.display.flip()
         clock.tick(20)

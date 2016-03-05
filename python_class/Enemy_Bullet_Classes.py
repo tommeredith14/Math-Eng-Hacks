@@ -48,17 +48,19 @@ class Enemy(pygame.sprite.Sprite):
         return "Enemy"
 
 class Explosion(pygame.sprite.Sprite):
-    def __init__(self, xpos, ypos):
+    def __init__(self):
         super().__init__()
         self.counter = 0
         self.image = pygame.image.load("explode1.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.centerx = xpos
-        self.rect.centery = ypos
+        self.rect.centerx = -500
+        self.rect.centery = -500
         self.textures = [pygame.image.load("explode2.png").convert_alpha(), pygame.image.load("explode3.png").convert_alpha(), pygame.image.load("explode4.png").convert_alpha()]
                          
-    def updateExplode(self, screen):
+    def updateExplode(self, screen, xpos, ypos):
         self.counter += 1
+        self.rect.centerx = xpos
+        self.rect.centery = ypos
         if (self.counter % 10 == 0 and self.counter: < 35):
             self.image = textures[self.counter//10 - 1]
             self.rect = self.image.get_rect()
