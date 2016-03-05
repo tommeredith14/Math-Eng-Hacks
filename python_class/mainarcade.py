@@ -230,7 +230,7 @@ def main():
                 tilelist[i-4]=3
 
             elif (i//52==25 and i%52>5 and i%52<40):
-                timelist[i]=2
+                tilelist[i]=2
 
 
     
