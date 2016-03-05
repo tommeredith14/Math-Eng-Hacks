@@ -4,6 +4,7 @@ import random
 
 RESPONSE = 0.004
 WHITE = [255,255,255]
+RED = [255,0,0]
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self,x_pos, y_pos, enemy_list, bullet_list,speed=None):
@@ -52,7 +53,7 @@ class HealthBar(pygame.sprite.Sprite):
         self.maxHealth = 1000
         self.currentHealth = 1000
         self.image = pygame.Surface([100, 30])
-        self.image.fill = ([255, 0, 0])
+        self.image.fill(RED)
         assets_group.add(self)
     def update(self, tank):
         self.currentHealth = tank.health
