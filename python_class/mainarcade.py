@@ -188,7 +188,7 @@ def main():
                 print("Damage")
         hit_list=pygame.sprite.spritecollide(player, bullet_list,1)
         if hit_list:
-            if hit_list[0].shooter.getType() != player.getType():
+            if hit_list[0].sType != player.getType():
                 player.health -= 10
 
     def enemy_collisions(enemy_list):
