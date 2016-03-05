@@ -50,10 +50,10 @@ class Tank(pygame.sprite.Sprite):
         self.rect.centery = size[1] / 2
         self.bitmap2 = self.bitmap
         self.angle = 140
-        self.speedx = 0.0
-        self.speedy = 0.0
-        self.accelx = 0.0
-        self.accely = 0.0
+        self.speedx = 1.0
+        self.speedy = 1.0
+        self.accelx = 2.0
+        self.accely = -1.0
         self.bullet_list = bullet_list
 
         self.turret = Turret()
@@ -106,6 +106,10 @@ class Tank(pygame.sprite.Sprite):
             
             self.rotate()
             
+            self.turret_angle += 30
+            
+            self.angle -=15
+            
             oldxpos = self.rect.centerx
             oldypos = self.rect.centery
 
@@ -136,7 +140,7 @@ class Tank(pygame.sprite.Sprite):
         screen.blit(self.turret.bitmap, (self.turret.rect))
 
 
-screen.fill(RED)
+screen.fill(WHITE)
 
 tank = Tank(14)
 
