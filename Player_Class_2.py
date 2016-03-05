@@ -168,8 +168,7 @@ class Tank(pygame.sprite.Sprite):
             self.rect.centerx += self.speedx * RESPONSE
             self.rect.centery += self.speedy * RESPONSE
 
-            if (self.speedx > 200 or self.speedy > 200):
-                self.angle = math.atan2(self.speedx, self.speedy) * 180 / math.pi
+            self.angle = math.atan2(self.speedx, self.speedy) * 180 / math.pi
 
             #self.image = pygame.transform.rotate(self.image2, self.angle)
 
