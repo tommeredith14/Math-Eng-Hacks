@@ -354,6 +354,8 @@ def main():
     enemy=Enemy(100,100,enemy_list,bullet_list,2)
     count=0
     enemy2=Enemy(300,100,enemy_list,bullet_list,4)
+
+    tank = Tank(14)
    
     
     while not done:
