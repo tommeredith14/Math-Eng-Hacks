@@ -18,11 +18,7 @@ def Update(Input): #UPDATES DATA READINGS
             Input[3] = str(rawArray[3])
             Input[4] = int(rawArray[4])
             Input[5] = int(rawArray[5])
-            return
 
-def PrintList(Input):
-    print(Input[0], '\t', Input[1])
-    return
 
 
 
@@ -210,7 +206,7 @@ while done == False:
     
     screen.fill(WHITE)
     
-    def Update(Input):
+    Update(Input)
     
     tank.inputFromController(Input[0], Input[1], Input[3])
 
