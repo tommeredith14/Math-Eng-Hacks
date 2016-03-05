@@ -32,9 +32,8 @@ class Tile(pygame.sprite.Sprite):
         super().__init__()
         
         self.image=pygame.image.load(OBSTACLE_PNG[tiletype]).convert()
-       
         self.image.set_colorkey(WHITE)
-        self.image = pygame.transform.scale2x(self.image)
+        
 
         self.tiletype=tiletype
         self.rect=self.image.get_rect()
@@ -43,18 +42,18 @@ class Map():
     def __init__(self,tilelist):
         self.tilelist=tilelist
     def draw_map(self):
-        for tile,value in enumerate(self.tilelist):
+        for tile in self.tilelist:
             currenttile = Tile(self.tilelist[tile])
             currenttile.rect.x=(tile%56)*30
-            currenttile.rect.y=(tile//56)*30
-            
+            currenttile.rect.y=tile/56*30
+            print (currenttile.rect.x)
         
             if(self.tilelist[tile]==0):
                 bystander_object.add(currenttile)
             if(self.tilelist[tile]==1):
                 immutable_object.add(currenttile)
             if(self.tilelist[tile]==2):
-                destructible_object.add(currenttile)
+                destructive_object.add(currenttile)
             if(self.tilelist[tile]==3):
                 explosive_object.add(currenttile)
 
@@ -77,11 +76,14 @@ def main():
     screen.fill(GREY)
     tilelist=[]
     for i in range(0,1960):
-        tilelist.append(random.randint(0,3))
+        tilelist.append(1)
     backgroundmap = Map(tilelist)
     backgroundmap.draw_map()
 
-    
+    immutable_object.draw(screen)
+    destructible_object.draw(screen)
+    bystander_object.draw(screen)
+    explosive_object.draw(screen)
    
     
     while not done:
@@ -89,10 +91,7 @@ def main():
             if event.type == pygame.QUIT:
                 done = True
        
-        immutable_object.draw(screen)
-        destructible_object.draw(screen)
-        bystander_object.draw(screen)
-        explosive_object.draw(screen)
+        
 
         
         
