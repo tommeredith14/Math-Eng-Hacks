@@ -68,17 +68,12 @@ class Explosion(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.centerx = xpos
             self.rect.centery = ypos
-        if (self.counter < 50 and self.counter >30):
-            self.gameover.set_alpha(255 * (self.counter - 30)/ 20)
-            screen.blit(self.gameover, (390,225))
-        elif self.counter > 40:
-            self.gameover.set_alpha(255)
-            screen.blit(self.gameover, (390,225))
-                    
-        
+
         rendering = pygame.sprite.Group()
         rendering.add(self)
         rendering.draw(screen)
+        if self.counter > 40:
+            screen.blit(self.gameover, (390,225))
 
 
 class Bullet(pygame.sprite.Sprite):
