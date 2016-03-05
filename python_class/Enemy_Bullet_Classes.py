@@ -4,6 +4,7 @@ import random
 
 RESPONSE = 0.004
 WHITE = [255,255,255]
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self,x_pos, y_pos, enemy_list, bullet_list,speed=None):
         super().__init__()
@@ -45,6 +46,8 @@ class Enemy(pygame.sprite.Sprite):
             self.remove()
     def getType(self):
         return "Enemy"
+    
+        
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, speed, x_pos, y_pos, angle, bullet_list,shooter):
@@ -110,19 +113,28 @@ class Tank(pygame.sprite.Sprite):
         self.accelx = 0
         self.accely = 0
         self.bullet_list = bullet_list
-        self.health = 100
+        self.health = 1000
+        self.oldxpos = 0
+        self.oldypos = 0
+        
+        self.coll_Immutable = False
+        self.coll_Destructible = False
+        self.coll_Drowning = False
+        self.coll_Fire = False
+        self.coll_Explosion = False
+        
 
         self.turret = Turret(x_pos, y_pos)
         self.turret_rot = 0
         self.turret_angle = 0
     
-    def getType():
+    def getType(self):
         return "Player"
 
 
     def firebullet(self):
-        fire_angle = angle + turret_angle # angle in degrees
-        newBullet = Bullet(10, self.rect.centerx,self.rect.centery,math.radians(fire_angle),self.bullet_list)
+        fire_angle = self.angle + self.turret_angle # angle in degrees
+        newBullet = Bullet(10, self.rect.centerx,self.rect.centery,-math.radians(fire_angle - 90),self.bullet_list,self)
         
         
 
@@ -147,7 +159,7 @@ class Tank(pygame.sprite.Sprite):
     
 
     def collideDestructable(self, destructable_list):
-        destructCollisionList = pygame.sprite.spritecollide(self, destructable_list, False)
+        destructCollisionList = pygame.sprite.spritecollide(self, destructable_list, True)
 
         if not destructCollisionList:
            return 0
@@ -163,7 +175,7 @@ class Tank(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=self.rect.center)
 
 
-    def update(self, immutable_list, destructable_list):
+    def update(self):
 
         if self.still_alive:
         
@@ -175,14 +187,14 @@ class Tank(pygame.sprite.Sprite):
             
  #           self.angle -=10
             
-            oldxpos = self.rect.centerx
-            oldypos = self.rect.centery
+            self.oldxpos = self.rect.centerx
+            self.oldypos = self.rect.centery
 
             self.speedx += self.accelx
             self.speedy += self.accely
 
-            self.speedx *= 0.95
-            self.speedy *= 0.95
+            self.speedx *= 0.97
+            self.speedy *= 0.97
 
             self.rect.centerx += self.speedx * RESPONSE
             self.rect.centery += self.speedy * RESPONSE
@@ -190,12 +202,34 @@ class Tank(pygame.sprite.Sprite):
             self.angle = math.atan2(self.speedx, self.speedy) * 180 / math.pi
 
             #self.image = pygame.transform.rotate(self.image2, self.angle)
-
-            if (self.collideImmutable(immutable_list) or self.collideDestructable(destructable_list) == 2):
-                self.rect.centerx = oldxpos
-                self.rect.centery = oldypos
+    def react(self):
+        if self.still_alive:
+            if (self.coll_Immutable or (self.coll_Destructible and self.speedx < 500 and self.speedy < 500)):
+                self.rect.centerx = self.oldxpos
+                self.rect.centery = self.oldypos
                 self.speedx = 0
                 self.speedy = 0
+            elif (self.coll_Destructible):
+                self.speedx /= 2
+                self.speedy /= 2
+            if (self.coll_Drowning):
+                self.health -= 4
+                self.speedx *= 0.8
+                self.speedy *= 0.8
+                self.coll_Fire = False
+            if (self.coll_Fire):
+                self.health -= 10
+            if (self.coll_Explosion):
+                self.health-200
+            if (self.health <= 0):
+                self.still_alive = False
+
+            
+            self.coll_Drowning = False
+            self.coll_Destructible = False
+            self.coll_Fire = False
+            self.coll_Drowning = False
+            self.coll_Explosion = False
 
             self.turret.update(self.rect.centerx, self.rect.centery, self.angle + self.turret_angle)
 
