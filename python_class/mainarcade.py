@@ -213,8 +213,26 @@ def main():
             player.coll_Destructible = True
         else:
             player.coll_Destructible = False
-        
-
+        hit_list = pygame.sprite.spritecollide(player,explosive_object,0)
+        if hit_list:
+            for i in hit_list:
+                explosive_object.remove(i)
+                i.switchType(5)
+                fire_object.add(i)
+            player.coll_Explosion = True
+        else:
+            player.coll_Explosion = False            
+        hit_list = pygame.sprite.spritecollide(player,fire_object,0)
+        if hit_list:
+            player.coll_Fire = True
+        else:
+            player.coll_Fire = False
+        hit_list = pygame.sprite.spritecollide(player,drowning_object,0)
+        if hit_list:
+            player.coll_Drowning = True
+        else:
+            player.coll_Drowning = False
+            
     bullet_list=pygame.sprite.Group()
     enemy_list=pygame.sprite.Group()
     enemy=Enemy(100,100,enemy_list,bullet_list,2)
@@ -228,16 +246,20 @@ def main():
                 done = True
         Update(Input)
         player.inputFromController(Input[0], Input[1], Input[3])
-        if count%10==0:
-            enemy.fireBullet()
-        if count%7==0:
-            enemy2.fireBullet()
+
         
         player.update()        
         
             
         bullet_list.update()
         enemy_list.update()
+        if count%10==0:
+            enemy.fireBullet()
+        if count%7==0:
+            enemy2.fireBullet()
+        if Input[2] == 1:
+            player.fireBullet()
+        
         bullet_collisions(bullet_list, enemy_list)
         enemy_collisions(enemy_list)
         player_collisions()
