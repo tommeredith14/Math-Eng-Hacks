@@ -221,10 +221,10 @@ def main():
                 key.ySpeed = -1*abs(key.ySpeed) - 1
                 key.rect.y = 1528
                 hardy = True
-           if(abs(enemy_x - obs_x) <= abs(enemy_y - obs_y) and hardy == False:
+           if (abs(enemy_x - obs_x) <= abs(enemy_y - obs_y)) and hardy == False:
                 key.ySpeed = -1 * (key.ySpeed)
                 key.rect.y += 4*key.xSpeed
-           elif (abs(enemy_y - obs_x) >= abs(enemy_y - abs_y) and hardx == False:
+           elif (abs(enemy_y - obs_x) >= abs(enemy_y - abs_y)) and hardx == False:
                 key.xSpeed = -1*(key.xSpeed)
                 key.rect.x += 4*key.xSpeed
 
