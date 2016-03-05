@@ -4,7 +4,28 @@ pygame.init()
 import Enemy_Bullet_Classes
 from Enemy_Bullet_Classes import *
 #pygame.mixer.music.load('Cave_Story')
-import Geoff.py
+#import Geoff.py
+import serial
+import time
+ser = serial.Serial('/dev/ttyACM1', 9600)
+
+Input = [0, 0, 0, 0, 0, 0]
+print('Horizontal   Vertical  Shooting  Steering   Other   Pause')
+
+def Update(Input): #UPDATES DATA READINGS
+    ser.write(b'`')     #tells arduino it wants some readings
+    val1 = ser.readline().strip() #reads all input at once as a string
+    if (len(val1) != 0):          #makes sure not empty
+        rawArray = val1.decode().split(' ')    #generates array with ' ' delimiter
+        if (len(rawArray) == 6):           #gets rid of first garbage read
+            Input[0] = int(rawArray[0])
+            Input[1] = int(rawArray[1])
+            Input[2] = int(rawArray[2])
+            Input[3] = str(rawArray[3])
+            Input[4] = int(rawArray[4])
+            Input[5] = int(rawArray[5])
+            return
+
 
 #Colours
 BLACK = [  0,  0,  0]
