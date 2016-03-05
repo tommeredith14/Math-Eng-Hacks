@@ -125,7 +125,7 @@ class Tank(pygame.sprite.Sprite):
         self.turret_rot = 0
         self.turret_angle = 0
     
-    def getType():
+    def getType(self):
         return "Player"
 
 
