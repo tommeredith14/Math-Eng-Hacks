@@ -321,7 +321,8 @@ def main():
         
         player.update()        
 
-        pygame.draw.rect(screen ,RED,(200,30,650,45))
+        pygame.draw.rect(screen, RED, (650, 15, 200 * (player.health / 1000), 30))
+        pygame.draw.rect(screen, RED, (650, 15, 200, 30), 5)
             
         bullet_list.update()
         enemy_list.update()
