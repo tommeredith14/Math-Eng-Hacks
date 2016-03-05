@@ -4,6 +4,7 @@ pygame.init()
 import Enemy_Bullet_Classes
 from Enemy_Bullet_Classes import *
 #pygame.mixer.music.load('Cave_Story')
+import Geoff.py
 
 #Colours
 BLACK = [  0,  0,  0]
@@ -14,6 +15,8 @@ PURPLE = [153,0,153]
 GREEN=[0,255,0]
 BLUE =[0,0,255]
 BROWN = [139,69,19]
+START_X = 800
+START_Y = 300
 
 SCREEN_DIMS = [1560,900]
 SCALE_FACTOR = 0.5
@@ -180,12 +183,14 @@ def main():
     enemy=Enemy(100,100,enemy_list,bullet_list,2)
     count=0
     enemy2=Enemy(300,100,enemy_list,bullet_list,4)
-   
+    player = Tank(bullet_list, START_X, START_Y)
     
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
+        Update(Input)
+        player.inputFromController(Input[0], Input[1], Input[3]
         if count%10==0:
             enemy.fireBullet()
         if count%7==0:
@@ -205,8 +210,9 @@ def main():
         explosive_object.draw(screen)
         drowning_object.draw(screen)
         bullet_list.draw(screen)
-        enemy_list.draw(screen)        
-        
+        enemy_list.draw(screen)
+        player.update(immutable_object, destructible_object)
+        player.render(screen)
         
         count+=1
         

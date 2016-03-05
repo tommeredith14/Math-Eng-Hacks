@@ -19,7 +19,7 @@ def Update(Input): #UPDATES DATA READINGS
             Input[4] = int(rawArray[4])
             Input[5] = int(rawArray[5])
             return
-
+'''
 def PrintList(Input):
     print(Input[0], '\t', Input[1])
     return
@@ -28,7 +28,7 @@ while 1:
     Update(Input)
     PrintList(Input)
     time.sleep(0.05)
-    
+   ''' 
 
     
   
