@@ -111,6 +111,8 @@ class Tank(pygame.sprite.Sprite):
         self.accely = 0
         self.bullet_list = bullet_list
         self.health = 1000
+        self.oldxpos = 0
+        self.oldypos = 0
         
         self.coll_Immutable = False
         self.coll_Destructible = False
@@ -169,7 +171,7 @@ class Tank(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=self.rect.center)
 
 
-    def update(self, immutable_list, destructable_list):
+    def update(self):
 
         if self.still_alive:
         
@@ -181,8 +183,8 @@ class Tank(pygame.sprite.Sprite):
             
  #           self.angle -=10
             
-            oldxpos = self.rect.centerx
-            oldypos = self.rect.centery
+            self.oldxpos = self.rect.centerx
+            self.oldypos = self.rect.centery
 
             self.speedx += self.accelx
             self.speedy += self.accely
@@ -196,10 +198,11 @@ class Tank(pygame.sprite.Sprite):
             self.angle = math.atan2(self.speedx, self.speedy) * 180 / math.pi
 
             #self.image = pygame.transform.rotate(self.image2, self.angle)
-
+    def react(self)
+        if self.still_alive:
             if (self.coll_Immutable or (self.coll_Destructible and speedx < 500 and speedy < 500)):
-                self.rect.centerx = oldxpos
-                self.rect.centery = oldypos
+                self.rect.centerx = self.oldxpos
+                self.rect.centery = self.oldypos
                 self.speedx = 0
                 self.speedy = 0
             elif (self.coll_Destructible):
@@ -212,6 +215,8 @@ class Tank(pygame.sprite.Sprite):
                 self.coll_Fire = False
             if (self.coll_Fire):
                 self.damage -= 5
+            if (self.damage <= 0)
+                self.still_alive = False
 
             
             self.coll_Drowning = False
