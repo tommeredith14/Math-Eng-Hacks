@@ -80,11 +80,10 @@ clock=pygame.time.Clock()
 #Main Program Loop
 def main():
     done = False
-    
+    count = 0
     screen.fill(GREY)
     tilelist=[]
     def map_one(tilelist):
-        
         for i in range(0,1560):
             tilelist.append(0)
             if i<53 or i>1508 or i%52==0 or i%52==51:
@@ -136,7 +135,6 @@ def main():
         bystander_object.draw(screen)
         explosive_object.draw(screen)
         drowning_object.draw(screen)
-
         if count%10==0:
             enemy.fireBullet()
         bullet_list.update()

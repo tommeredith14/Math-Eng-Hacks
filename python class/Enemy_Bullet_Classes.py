@@ -24,9 +24,13 @@ class Enemy(pygame.sprite.Sprite):
 
         self.rect.x += self.xSpeed *  1
         self.rect.y += self.ySpeed *  1
-    def fireBullet(self,xSpeed = None, ySpeed = None):
+    def fireBullet(self, speed = None, angle = None):
         # newBullet = Bullet(self.hitbox.rect.x, self.hitbox.rect.y, 1)
-         newBullet = Bullet(4,self.rect.x, self.rect.y,1, self.list_to_fire)
+        if speed == None:
+            speed = random.uniform(1,7)
+        if angle == None:
+            angle = random.uniform(-math.pi,math.pi)
+        newBullet = Bullet(speed,self.rect.x, self.rect.y,angle, self.list_to_fire)
        #  bullet_list.add(newBullet)
 
 class Bullet(pygame.sprite.Sprite):
