@@ -5,8 +5,6 @@ import random
 RESPONSE = 0.004
 WHITE = [255,255,255]
 
-gameover = pygame.image.load("gameover.png").convert_alpha()
-
 class Enemy(pygame.sprite.Sprite):
     def __init__(self,x_pos, y_pos, enemy_list, bullet_list,speed=None):
         super().__init__()
@@ -58,8 +56,9 @@ class Explosion(pygame.sprite.Sprite):
         self.rect.centerx = -500
         self.rect.centery = -500
         self.textures = [pygame.image.load("explode2.png").convert_alpha(), pygame.image.load("explode3.png").convert_alpha(), pygame.image.load("explode4.png").convert_alpha()]
+        self.gameover = pygame.image.load("gameover.png").convert_alpha()
                          
-    def updateExplode(self, screen, xpos, ypos):
+    def updateExplode(self, screen, xpos, ypos, gameover):
         self.counter += 1
         self.rect.centerx = xpos
         self.rect.centery = ypos
@@ -67,11 +66,11 @@ class Explosion(pygame.sprite.Sprite):
             self.image = self.textures[self.counter//10 - 1]
             self.rect = self.image.get_rect()
         if (self.counter < 50 and self.counter >30):
-            gameover.set_alpha(255 * (self.counter - 30)/ 20)
-            screen.blit(gameover, (390,225))
+            self.gameover.set_alpha(255 * (self.counter - 30)/ 20)
+            screen.blit(self.gameover, (390,225))
         elif self.counter > 40:
-            gameover.set_alpha(255)
-            screen.blit(gameover, (390,225))
+            self.gameover.set_alpha(255)
+            screen.blit(self.gameover, (390,225))
                     
         
         rendering = pygame.sprite.Group()
