@@ -18,14 +18,15 @@ BROWN = [139,69,19]
 SCREEN_DIMS = [1560,900]
 SCALE_FACTOR = 0.5
 TILE_DIMS = [30,30]
-OBSTACLE_PNG=["grasstile.png", "bricktile.png","fence.png", "tnttile.png","watertile.png"]
-TILE_TYPE=[0,1,2,3,4]
+OBSTACLE_PNG=["grasstile.png", "bricktile.png","fence.png", "tnttile.png","watertile.png","fire.png"]
+TILE_TYPE=[0,1,2,3,4,5]
 
 immutable_object=pygame.sprite.Group()
 destructible_object=pygame.sprite.Group()
 bystander_object=pygame.sprite.Group()
 explosive_object=pygame.sprite.Group()
 drowning_object=pygame.sprite.Group()
+fire_object=pygame.sprite.Group()
 
 
 
@@ -67,6 +68,9 @@ class Map():
                 explosive_object.add(currenttile)
             if(self.tilelist[tile]==4):
                 drowning_object.add(currenttile)
+            if(self.tilelist[tile]==5):
+                fire_object.add(currenttile)
+            
     def update(self):
         bystander_object.empty()
         immutable_object.empty()
@@ -145,15 +149,24 @@ def main():
             destructible_object.remove(key)
             key.switchType(0)
             bystander_object.add(key)
-        
+    
+        hit_list=pygame.sprite.groupcollide(explosive_object,bullet_list,0,1)
+        for key in hit_list:
+            destructible_object.remove(key)
+            key.switchType(5)
+            bystander_object.add(key)
+
+        hit_list=pygame.sprite.groupcollide(enemy_list, bullet_list,0,1)
+        for key in hit_list:
+            key.do_damage(10)
             
             
 
     bullet_list=pygame.sprite.Group()
     enemy_list=pygame.sprite.Group()
-    enemy=Enemy(100,100,enemy_list,bullet_list)
+    enemy=Enemy(100,100,enemy_list,bullet_list,2)
     count=0
-    
+    enemy2=Enemy(300,100,enemy_list,bullet_list,4)
    
     
     while not done:
@@ -162,9 +175,12 @@ def main():
                 done = True
         if count%10==0:
             enemy.fireBullet()
+        if count%7==0:
+            enemy2.fireBullet()
         
             
         bullet_list.update()
+        enemy_list.update()
         bullet_collisions(bullet_list, enemy_list)
         
         bullet_list.draw(screen)
