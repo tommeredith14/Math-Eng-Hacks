@@ -376,14 +376,16 @@ def main():
         bullet_list.draw(screen)
         enemy_list.draw(screen)
         
-        if player.still_alive == False:
-            endExplosion.updateExplode(screen, player.rect.centerx, player.rect.centery)
+
 
 
         SetLights(math.ceil(8* (player.health / 1000)))
 
         player.react()
         player.render(screen)
+        
+        if player.still_alive == False:
+            endExplosion.updateExplode(screen, player.rect.centerx, player.rect.centery)
         
         count+=1
         pygame.draw.rect(screen, RED, (650, 45, 200 * (player.health / 1000), 30))
