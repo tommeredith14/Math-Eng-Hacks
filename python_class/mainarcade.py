@@ -186,10 +186,11 @@ def main():
             if hit_list[key][0].sType != key.getType():
                 key.do_damage(10)
                 print("Damage")
-        hit_list=pygame.sprite.spritecollide(player, bullet_list,1)
+        hit_list=pygame.sprite.spritecollide(player, bullet_list,0)
         if hit_list:
             if hit_list[0].sType != player.getType():
                 player.health -= 10
+                bullet_list.remove(hit_list[0])
 
     def enemy_collisions(enemy_list):
         hit_list=pygame.sprite.groupcollide(enemy_list,immutable_object,0,0)
