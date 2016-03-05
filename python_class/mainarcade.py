@@ -206,7 +206,7 @@ def main():
             player.coll_Immutable = False
         hit_list = pygame.sprite.spritecollide(player,destructible_object,0)
         if hit_list:
-            for i in hitlist:
+            for i in hit_list:
                 destructible_object.remove(i)
                 i.switchType(0)
                 bystander_object.add(i)
