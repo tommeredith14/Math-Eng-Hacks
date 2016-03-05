@@ -258,7 +258,7 @@ def main():
         if count%7==0:
             enemy2.fireBullet()
         if Input[2] == 1:
-            player.fireBullet()
+            player.firebullet()
         
         bullet_collisions(bullet_list, enemy_list)
         enemy_collisions(enemy_list)
