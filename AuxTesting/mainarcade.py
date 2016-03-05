@@ -346,7 +346,7 @@ def main():
         bullet_list.draw(screen)
         enemy_list.draw(screen)
 
-        SetLights(8* (player.health / 1000))
+        SetLights(math.ceil(8* (player.health / 1000)))
 
         player.react()
         player.render(screen)
