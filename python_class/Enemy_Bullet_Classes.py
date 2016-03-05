@@ -130,7 +130,7 @@ class Tank(pygame.sprite.Sprite):
 
 
     def firebullet(self):
-        fire_angle = angle + turret_angle # angle in degrees
+        fire_angle = self.angle + self.turret_angle # angle in degrees
         newBullet = Bullet(10, self.rect.centerx,self.rect.centery,math.radians(fire_angle),self.bullet_list)
         
         
