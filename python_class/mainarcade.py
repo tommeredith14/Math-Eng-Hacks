@@ -163,7 +163,7 @@ class Map():
 
 
 
-screen = pygame.display.set_mode(SCREEN_DIMS,pygame.FULLSCREEN)
+screen = pygame.display.set_mode(SCREEN_DIMS)#pygame.FULLSCREEN)
 pygame.display.set_caption("ARCADE")
 clock=pygame.time.Clock()
 
@@ -346,6 +346,8 @@ def main():
     enemy=Enemy(100,100,enemy_list,bullet_list,2)
     count=0
     enemy2=Enemy(300,100,enemy_list,bullet_list,4)
+    enemy3=Enemy(700,540,enemy_list,bullet_list,3)
+    enemy4=Enemy(1000,700,enemy_list,bullet_list,5)
     player = Tank(bullet_list, START_X, START_Y)
     endExplosion = Explosion()
     
@@ -366,6 +368,10 @@ def main():
             enemy.fireBullet()
         if count%7==0:
             enemy2.fireBullet()
+        if count%5==0:
+            enemy3.fireBullet()
+        if count%12==0:
+            enemy4.fireBullet()    
         if Input[2] == 1:
             player.firebullet()
         
