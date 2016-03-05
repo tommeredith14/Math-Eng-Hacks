@@ -69,7 +69,7 @@ class Explosion(pygame.sprite.Sprite):
         if (self.counter < 50 and self.counter >30):
             gameover.set_alpha(255 * (self.counter - 30)/ 20)
             screen.blit(gameover, (390,225))
-        else if self.counter > 40:
+        elif self.counter > 40:
             gameover.set_alpha(255)
             screen.blit(gameover, (390,225))
                     
