@@ -61,7 +61,7 @@ class Explosion(pygame.sprite.Sprite):
         self.counter += 1
         self.rect.centerx = xpos
         self.rect.centery = ypos
-        if (self.counter % 10 == 0 and self.counter: < 35):
+        if (self.counter % 10 == 0 and self.counter < 35):
             self.image = textures[self.counter//10 - 1]
             self.rect = self.image.get_rect()
         rendering = pygame.sprite.Group()
