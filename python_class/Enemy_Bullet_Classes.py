@@ -200,7 +200,7 @@ class Tank(pygame.sprite.Sprite):
             #self.image = pygame.transform.rotate(self.image2, self.angle)
     def react(self):
         if self.still_alive:
-            if (self.coll_Immutable or (self.coll_Destructible and speedx < 500 and speedy < 500)):
+            if (self.coll_Immutable or (self.coll_Destructible and self.speedx < 500 and self.speedy < 500)):
                 self.rect.centerx = self.oldxpos
                 self.rect.centery = self.oldypos
                 self.speedx = 0
@@ -210,8 +210,8 @@ class Tank(pygame.sprite.Sprite):
                 self.speedy /= 2
             if (self.coll_Drowning):
                 self.health -= 2
-                speedx *= 0.8
-                speedy *= 0.8
+                self.speedx *= 0.8
+                self.speedy *= 0.8
                 self.coll_Fire = False
             if (self.coll_Fire):
                 self.health -= 5
