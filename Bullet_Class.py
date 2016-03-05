@@ -7,14 +7,32 @@ speed = [2, 2]
 black = 0, 0, 0
 bullet_list = pygame.sprite.Group()
 class EnemyHitBox(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self,x_pos, y_pos, enemy_list, bullet_list,speed=None):
         super().__init__()
         self.image = pygame.image.load("Chassis.png").convert()
         self.image.set_colorkey(black)
         self.rect = self.image.get_rect()
+        self.rect.x = x_pos
+        self.rect.y = y_pos
+        if speed == None:
+            self.speed= 0
+        else:
+            self.speed = speed
+        self.xSpeed = self.speed
+        self.ySpeed = self.speed
+        enemy_list.add(self)
+        self.list_to_fire = bullet_list
 
+    def update(self):
 
+        self.rect.x += self.xSpeed *  1
+        self.rect.y += self.ySpeed *  1
+    def fireBullet(self,xSpeed = None, ySpeed = None):
+        # newBullet = Bullet(self.hitbox.rect.x, self.hitbox.rect.y, 1)
+         newBullet = BulletHitBox(4,self.rect.x, self.rect.y,1, self.list_to_fire)
+       #  bullet_list.add(newBullet)
 
+'''
 class Enemy:
      def __init__(self,x_pos, y_pos, speed=None):
 
@@ -40,9 +58,9 @@ class Enemy:
          newBullet = BulletHitBox(4,self.hitbox.rect.x, self.hitbox.rect.y,1)
        #  bullet_list.add(newBullet)
 
-
+'''
 class BulletHitBox(pygame.sprite.Sprite):
-    def __init__(self, speed, x_pos, y_pos, angle):
+    def __init__(self, speed, x_pos, y_pos, angle, bullet_list):
         super().__init__()
         self.image = pygame.image.load("tankGun.png").convert()
         self.image.set_colorkey(black)
@@ -86,12 +104,12 @@ screen = pygame.display.set_mode(size)
 
 
 #bullet = Bullet(10,20,math.pi/6,20)
-newEnemy = Enemy(50,50)
+
 
 
 enemy_list = pygame.sprite.Group()
-enemy_list.add(newEnemy.hitbox)
-
+#enemy_list.add(newEnemy)
+newEnemy = EnemyHitBox(50,50,enemy_list, bullet_list)
 
 #bullet_list.add(bullet.hitbox)
 clock = pygame.time.Clock()
@@ -112,7 +130,7 @@ while 1:
    enemy_list.draw(screen)
    pygame.display.flip()
    count+= 1
-   clock.tick(30)
+   clock.tick(1000/24)
 
 
 
