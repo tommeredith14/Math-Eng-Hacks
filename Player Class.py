@@ -61,17 +61,45 @@ class Player():
         self.scale = 1
         self.speed = 1
 
+        self.colliding = False
+
+    def collideImmutable(self):
+
+            
+
+        
+
+    def collideDestructable(self):
+
+    
+
     def updatePlayer(self):
+
+        oldXLoc = self.playerXPos
+        oldYLoc = self.playerYPos
+        oldPlayerAngle = self.playerAngle
+
+        
         self.playerXSpeed += self.playerXAccel # Apply acceleration
         self.playerYSpeed += self.playerYAccel # Apply acceleration
         
         self.playerXSpeed *= 0.95 # Apply drag
         self.playerYSpeed *= 0.95 # Apply drag
 
-        playerAngle = math.atan2(playerYSpeed / playerXSpeed) # find player angle
+        moveAngle = math.atan2(playerYSpeed / playerXSpeed) # find player angle
 
-        self.playerXLoc += self.PlayerXSpeed * math.cos(playerAngle)
-        self.playerYLoc += self.PlayerYSpeed * math.sin(playerAngle)
+        self.playerXLoc += self.PlayerXSpeed * math.cos(moveAngle) * 0.01
+        self.playerYLoc += self.PlayerYSpeed * math.sin(moveAngle) * 0.01
+
+        if playerXSpeed / math.cos(moveAngle) > 100:
+            self.playerAngle = moveAngle
+
+        if collideImmutable ||
+
+        
+        
+
+        
         
         
             
