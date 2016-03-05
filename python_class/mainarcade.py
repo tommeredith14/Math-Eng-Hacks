@@ -375,7 +375,8 @@ def main():
         bullet_list.draw(screen)
         enemy_list.draw(screen)
         
-        if player.
+        if player.still_alive = false:
+            endExplosion.updateExplode(screen, player.self.rect.centerx, player.self.rect.centery)
 
 
         SetLights(math.ceil(8* (player.health / 1000)))
