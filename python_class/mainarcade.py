@@ -190,7 +190,7 @@ def main():
             if event.type == pygame.QUIT:
                 done = True
         Update(Input)
-        player.inputFromController(Input[0], Input[1], Input[3]
+        player.inputFromController(Input[0], Input[1], Input[3])
         if count%10==0:
             enemy.fireBullet()
         if count%7==0:
