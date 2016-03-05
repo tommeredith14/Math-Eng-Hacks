@@ -110,7 +110,13 @@ class Tank(pygame.sprite.Sprite):
         self.accelx = 0
         self.accely = 0
         self.bullet_list = bullet_list
-        self.health = 100
+        self.health = 1000
+        
+        self.coll_Immutable = False
+        self.coll_Destructible = False
+        self.coll_Drowning = False
+        Self.coll_Fire = False
+        
 
         self.turret = Turret(x_pos, y_pos)
         self.turret_rot = 0
@@ -191,11 +197,27 @@ class Tank(pygame.sprite.Sprite):
 
             #self.image = pygame.transform.rotate(self.image2, self.angle)
 
-            if (self.collideImmutable(immutable_list) or self.collideDestructable(destructable_list) == 2):
+            if (self.coll_Immutable or (self.coll_Destructible and speedx < 500 and speedy < 500)):
                 self.rect.centerx = oldxpos
                 self.rect.centery = oldypos
                 self.speedx = 0
                 self.speedy = 0
+            elif (self.coll_Destructible):
+                self.speedx /= 2
+                self.speedy /= 2
+            if (self.coll_Drowning)
+                self.damage -= 2
+                speedx *= 0.8
+                speedy *= 0.8
+                self.coll_Fire = False
+            if (self.coll_Fire)
+                self.damage -= 5
+
+            
+            self.coll_Drowning = False
+            self.coll_Destructible = False
+            self.coll_Fire = False
+            self.coll_Drowning = False
 
             self.turret.update(self.rect.centerx, self.rect.centery, self.angle + self.turret_angle)
 
