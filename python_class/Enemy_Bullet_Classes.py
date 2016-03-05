@@ -217,7 +217,7 @@ class Tank(pygame.sprite.Sprite):
             if (self.coll_Fire):
                 self.health -= 10
             if (self.coll_Explosion):
-                self.health-200:
+                self.health-200
             if (self.health <= 0):
                 self.still_alive = False
 
