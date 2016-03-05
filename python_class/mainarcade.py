@@ -196,8 +196,40 @@ def main():
         hit_list=pygame.sprite.groupcollide(enemy_list,immutable_object,0,0)
         for key in hit_list:
             
-            key.xSpeed = random.uniform(-2,2)
-            key.ySpeed = random.uniform(-2,2)
+           enemy_x = key.rect.x
+           enemy_y = key.rect.y
+
+           obs_x = hit_list[key][0].rect.x
+           obs_y = hit_list[key][0].rect.y
+
+           hardx  = False;
+           hardy = False;
+
+           if(enemy_x <= 31)
+               key.xSpeed  = abs(key.xSpeed) + 1
+               key.rect.x = 32
+               hardx = True
+           if (enemy_x >= 869)
+                key.xSpeed = -1*abs(key.xSpeed) - 1
+                key.rect.x = 864
+                hardx = True
+            else if(enemy_y <= 31)
+                key.ySpeed = abs(key.ySpeed)+1
+                key.rect.y = 35
+                hardy = True
+            elif(enemy_y >= 1529)
+                key.ySpeed = -1*abs(key.ySpeed) - 1
+                key.rect.y = 1528
+                hardy = True
+            if(abs(enemy_x - obs_x) <= abs(enemy_y - obs_y) and hardy == False:
+                 key.ySpeed = -1 * (key.ySpeed)
+                 key.rect.y += 4*key.xSpeed
+            elif (abs(enemy_y - obs_x) >= abs(enemy_y - abs_y) and hardx == False:
+                key.xSpeed = -1*(key.xSpeed)
+                key.rect.x += 4*key.xSpeed
+
+
+            
         hit_list=pygame.sprite.groupcollide(enemy_list,destructible_object,0,0)
         for key in hit_list:
             
