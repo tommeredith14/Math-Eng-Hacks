@@ -89,24 +89,6 @@ SetLights(HealthLevel)
 #time.sleep(2)
 
 
-def destroy(): # When program ending, the function is executed.
-    TurnOff()
-
-if __name__ == '__main__': # Program starting from here
-    try:
-        loop()
-    except KeyboardInterrupt:
-        TurnOff()
-
-
-
-
-
-
-
-
-
-
 
 
 #Colours
