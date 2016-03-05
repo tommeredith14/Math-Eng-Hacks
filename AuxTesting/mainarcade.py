@@ -240,7 +240,7 @@ def main():
     enemy2=Enemy(300,100,enemy_list,bullet_list,4)
     player = Tank(bullet_list, START_X, START_Y)
     
-    healthBar = HealthBar(pygame.sprite.Sprite)
+    healthBar = HealthBar()
     
     while not done:
         for event in pygame.event.get():
