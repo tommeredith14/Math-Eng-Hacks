@@ -118,6 +118,7 @@ class Tank(pygame.sprite.Sprite):
         self.coll_Destructible = False
         self.coll_Drowning = False
         self.coll_Fire = False
+        self.coll_Explosion = False
         
 
         self.turret = Turret(x_pos, y_pos)
@@ -189,8 +190,8 @@ class Tank(pygame.sprite.Sprite):
             self.speedx += self.accelx
             self.speedy += self.accely
 
-            self.speedx *= 0.95
-            self.speedy *= 0.95
+            self.speedx *= 0.97
+            self.speedy *= 0.97
 
             self.rect.centerx += self.speedx * RESPONSE
             self.rect.centery += self.speedy * RESPONSE
@@ -209,12 +210,14 @@ class Tank(pygame.sprite.Sprite):
                 self.speedx /= 2
                 self.speedy /= 2
             if (self.coll_Drowning):
-                self.health -= 2
+                self.health -= 4
                 self.speedx *= 0.8
                 self.speedy *= 0.8
                 self.coll_Fire = False
             if (self.coll_Fire):
-                self.health -= 5
+                self.health -= 10
+            if (self.coll_Explosion):
+                self.health-200:
             if (self.health <= 0):
                 self.still_alive = False
 
@@ -223,6 +226,7 @@ class Tank(pygame.sprite.Sprite):
             self.coll_Destructible = False
             self.coll_Fire = False
             self.coll_Drowning = False
+            self.coll_Explosion = False
 
             self.turret.update(self.rect.centerx, self.rect.centery, self.angle + self.turret_angle)
 
