@@ -66,6 +66,8 @@ class Explosion(pygame.sprite.Sprite):
         if (self.counter % 10 == 0 and self.counter < 35):
             self.image = self.textures[self.counter//10 - 1]
             self.rect = self.image.get_rect()
+            self.rect.centerx = xpos
+            self.rect.centery = ypos
         if (self.counter < 50 and self.counter >30):
             self.gameover.set_alpha(255 * (self.counter - 30)/ 20)
             screen.blit(self.gameover, (390,225))
