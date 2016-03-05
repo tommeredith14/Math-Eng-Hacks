@@ -30,6 +30,7 @@ def Update(Input): #UPDATES DATA READINGS
 import RPi.GPIO as GPIO
 LEDS = [7, 11, 12, 13, 15, 16, 18, 22] #starts at red to green
 Buzzer = 29
+
 HealthLevel = 8
 
 def SetLights(level):
@@ -71,23 +72,6 @@ GPIO.setup(22, GPIO.OUT)
 GPIO.output(22, GPIO.LOW)
 GPIO.setup(29, GPIO.OUT)
 GPIO.output(29, GPIO.LOW)
-
-#testing
-SetLights(HealthLevel)
-GPIO.output(Buzzer, GPIO.HIGH)
-time.sleep(2)
-GPIO.output(Buzzer, GPIO.LOW)
-HealthLevel = 1
-SetLights(HealthLevel)
-
-            
-#time.sleep(2)
-#SetLights(3)
-#time.sleep(2)
-#SetLights(12)
-#time.sleep(2)
-#SetLights(-4)
-#time.sleep(2)
 
 
 
