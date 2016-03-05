@@ -197,7 +197,23 @@ def main():
         for key in hit_list:
             
             key.xSpeed = random.uniform(-2,2)
-            key.ySpeed = random.uniform(-2,2)        
+            key.ySpeed = random.uniform(-2,2)
+    def player_collisions():
+        hit_list = pygame.sprite.spritecollide(player,immutable_object,0)
+        if hit_list:
+            player.coll_Immutable = True
+        else:
+            player.coll_Immutable = False
+        hit_list = pygame.sprite.spritecollide(player,destructible_object,0)
+        if hit_list:
+            for i in hitlist:
+                destructible_object.remove(i)
+                i.switchType(0)
+                bystander_object.add(i)
+            player.coll_Destructible = True
+        else:
+            player.coll_Destructible = False
+        
 
     bullet_list=pygame.sprite.Group()
     enemy_list=pygame.sprite.Group()
@@ -222,6 +238,7 @@ def main():
         enemy_list.update()
         bullet_collisions(bullet_list, enemy_list)
         enemy_collisions(enemy_list)
+        player_collisions()
         bullet_list.draw(screen)
         enemy_list.draw(screen)
         
