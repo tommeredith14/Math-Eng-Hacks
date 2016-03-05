@@ -22,7 +22,6 @@ class Turret(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
 # Sets up the image and Rect
-        self.still_alive = True # It was a triumph.
         self.bitmap = pygame.image.load("tankGun.png").convert_alpha()
         self.bitmap.set_colorkey((255,255,255))
         self.rect = self.bitmap.get_rect()
@@ -40,6 +39,8 @@ class Tank(pygame.sprite.Sprite):
     def __init__(self, bullet_list):
         pygame.init()
         pygame.sprite.Sprite.__init__(self)
+        
+        self.still_alive = True # It was a triumph.
 
 # Sets up the image and Rect
         self.bitmap = pygame.image.load("Chassis.png").convert_alpha()
