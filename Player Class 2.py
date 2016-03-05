@@ -97,13 +97,6 @@ class Tank(pygame.sprite.Sprite):
     def update(self, immutable_list, destructable_list):
 
         self.turret_angle += 10 * self.turret_rot
-
-
-        self.turret_angle += 20
-        self.angle -= 10
-
-
-
         
 
         
