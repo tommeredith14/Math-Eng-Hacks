@@ -26,6 +26,96 @@ def Update(Input): #UPDATES DATA READINGS
             Input[5] = int(rawArray[5])
             return
 
+import RPi.GPIO as GPIO
+LEDS = [7, 11, 12, 13, 15, 16, 18, 22] #starts at red to green
+Buzzer = 29
+HealthLevel = 8
+
+def SetLights(level):
+    #fixes wrong levels
+    if (level > 8):
+        level = 8
+    if (level < 0):
+        level = 0
+        
+    #turn off all lights above level
+    for i in range(7, level-1, -1):
+        GPIO.output(LEDS[i], GPIO.LOW)
+    #turn on all lights at and below level
+    for i in range(level):
+        GPIO.output(LEDS[i], GPIO.HIGH)
+
+def TurnOff():
+    for i in range(8):
+        GPIO.output(LEDS[i], GPIO.LOW)
+    GPIO.output(Buzzer, GPIO.LOW)
+
+        
+GPIO.setmode(GPIO.BOARD) # Number GPIOs by its physical location
+GPIO.setup(7, GPIO.OUT)
+GPIO.output(7, GPIO.LOW)
+GPIO.setup(11, GPIO.OUT)
+GPIO.output(11, GPIO.LOW)
+GPIO.setup(12, GPIO.OUT)
+GPIO.output(12, GPIO.LOW)
+GPIO.setup(13, GPIO.OUT)
+GPIO.output(13, GPIO.LOW)
+GPIO.setup(15, GPIO.OUT)
+GPIO.output(15, GPIO.LOW)
+GPIO.setup(16, GPIO.OUT)
+GPIO.output(16, GPIO.LOW)
+GPIO.setup(18, GPIO.OUT)
+GPIO.output(18, GPIO.LOW)
+GPIO.setup(22, GPIO.OUT)
+GPIO.output(22, GPIO.LOW)
+GPIO.setup(29, GPIO.OUT)
+GPIO.output(29, GPIO.LOW)
+
+#testing
+SetLights(HealthLevel)
+GPIO.output(Buzzer, GPIO.HIGH)
+time.sleep(2)
+GPIO.output(Buzzer, GPIO.LOW)
+HealthLevel = 1
+SetLights(HealthLevel)
+
+def loop():
+    while 1:
+        if (HealthLevel <= 1):
+            #see if buzzer should be on or off (every half second)
+            if (int((time.clock()*10))%2 == 0):
+                GPIO.output(Buzzer, GPIO.HIGH)
+            else:
+                GPIO.output(Buzzer, GPIO.LOW)
+            
+#time.sleep(2)
+#SetLights(3)
+#time.sleep(2)
+#SetLights(12)
+#time.sleep(2)
+#SetLights(-4)
+#time.sleep(2)
+
+
+def destroy(): # When program ending, the function is executed.
+    TurnOff()
+
+if __name__ == '__main__': # Program starting from here
+    try:
+        loop()
+    except KeyboardInterrupt:
+        TurnOff()
+
+
+
+
+
+
+
+
+
+
+
 
 #Colours
 BLACK = [  0,  0,  0]
@@ -110,6 +200,8 @@ class Map():
 
     
 
+
+    
     
         
 
@@ -180,12 +272,17 @@ def main():
             key.switchType(5)
             bystander_object.add(key)
 
-        hit_list=pygame.sprite.groupcollide(enemy_list, bullet_list,0,1)
+        hit_list=pygame.sprite.groupcollide(enemy_list, bullet_list,0,0)
         for key in hit_list:
             
             if hit_list[key][0].sType != key.getType():
                 key.do_damage(10)
-                print("Damage")
+                bullet_list.remove(hit_list[key])
+        hit_list=pygame.sprite.spritecollide(player, bullet_list,0)
+        if hit_list:
+            if hit_list[0].sType != player.getType():
+                player.health -= 10
+                bullet_list.remove(hit_list[0])
 
     def enemy_collisions(enemy_list):
         hit_list=pygame.sprite.groupcollide(enemy_list,immutable_object,0,0)
@@ -240,19 +337,17 @@ def main():
     enemy2=Enemy(300,100,enemy_list,bullet_list,4)
     player = Tank(bullet_list, START_X, START_Y)
     
-    healthBar = HealthBar()
-    
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
         Update(Input)
         player.inputFromController(Input[0], Input[1], Input[3])
-        
-        healthBar.update(player, screen)
+
         
         player.update()        
-        
+
+        pygame.draw.rect(DISPLAY,RED,(200,30,100,50))
             
         bullet_list.update()
         enemy_list.update()
@@ -277,6 +372,8 @@ def main():
         bullet_list.draw(screen)
         enemy_list.draw(screen)
 
+        SetLights(8* (player.health / 1000))
+
         player.react()
         player.render(screen)
         
@@ -286,7 +383,8 @@ def main():
         pygame.display.flip()
         clock.tick(20)
         
-    pygame.quit().main()
+    pygame.quit()
+main()
 
     
     
