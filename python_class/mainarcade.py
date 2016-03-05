@@ -375,7 +375,7 @@ def main():
         bullet_list.draw(screen)
         enemy_list.draw(screen)
         
-        if player.still_alive = false:
+        if player.still_alive == false:
             endExplosion.updateExplode(screen, player.self.rect.centerx, player.self.rect.centery)
 
 
