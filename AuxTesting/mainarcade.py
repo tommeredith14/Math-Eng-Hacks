@@ -321,7 +321,7 @@ def main():
         
         player.update()        
 
-        pygame.draw.rect(DISPLAY,RED,(200,30,100,50))
+        pygame.draw.rect(screen ,RED,(200,30,650,45))
             
         bullet_list.update()
         enemy_list.update()
