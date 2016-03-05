@@ -364,6 +364,12 @@ def main():
 
 
         SetLights(math.ceil(8* (player.health / 1000)))
+        if (math.ceil(8* (player.health / 1000)) <= 1):
+            #see if buzzer should be on or off (every half second)
+            if (int((time.clock()*10))%2 == 0):
+                GPIO.output(Buzzer, GPIO.HIGH)
+            else:
+                GPIO.output(Buzzer, GPIO.LOW)
 
         player.react()
         player.render(screen)
@@ -375,7 +381,12 @@ def main():
         pygame.draw.rect(screen, RED, (650, 45, 200 * (player.health / 1000), 30))
         pygame.draw.rect(screen, RED, (650, 45, 200, 30), 5)
         
-        
+        if (player.health <= 1):
+            #see if buzzer should be on or off (every half second)
+            if (int((time.clock()*10))%2 == 0):
+                GPIO.output(Buzzer, GPIO.HIGH)
+            else:
+                GPIO.output(Buzzer, GPIO.LOW)
         
         pygame.display.flip()
         clock.tick(20)
