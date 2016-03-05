@@ -58,7 +58,7 @@ class Explosion(pygame.sprite.Sprite):
         self.textures = [pygame.image.load("explode2.png").convert_alpha(), pygame.image.load("explode3.png").convert_alpha(), pygame.image.load("explode4.png").convert_alpha()]
         self.gameover = pygame.image.load("gameover.png").convert_alpha()
                          
-    def updateExplode(self, screen, xpos, ypos, gameover):
+    def updateExplode(self, screen, xpos, ypos):
         self.counter += 1
         self.rect.centerx = xpos
         self.rect.centery = ypos
