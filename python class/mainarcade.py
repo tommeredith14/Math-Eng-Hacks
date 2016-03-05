@@ -1,6 +1,9 @@
 import pygame
 import random
 pygame.init()
+import Enemy_Bullet_Classes
+from Enemy_Bullet_Classes import *
+
 
 #Colours
 BLACK = [  0,  0,  0]
@@ -116,6 +119,10 @@ def main():
     backgroundmap = Map(tilelist)
     backgroundmap.draw_map()
 
+    bullet_list=pygame.sprite.Group()
+    enemy_list=pygame.sprite.Group()
+    enemy=Enemy(100,100,enemy_list,bullet_list)
+    count=0
     
    
     
@@ -130,6 +137,12 @@ def main():
         explosive_object.draw(screen)
         drowning_object.draw(screen)
 
+        if count%10==0:
+            enemy.fireBullet()
+        bullet_list.update()
+        bullet_list.draw(screen)
+        enemy_list.draw(screen)
+        count+=1
         
         
         pygame.display.flip()
