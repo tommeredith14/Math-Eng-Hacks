@@ -51,7 +51,7 @@ bystander_object=pygame.sprite.Group()
 explosive_object=pygame.sprite.Group()
 drowning_object=pygame.sprite.Group()
 fire_object=pygame.sprite.Group()
-assets_group=pygame.sprite.Group()
+
 
 
 class Tile(pygame.sprite.Sprite):
@@ -249,7 +249,7 @@ def main():
         Update(Input)
         player.inputFromController(Input[0], Input[1], Input[3])
         
-        healthBar.update(player)
+        healthBar.update(player, screen)
         
         player.update()        
         
@@ -276,7 +276,6 @@ def main():
         drowning_object.draw(screen)
         bullet_list.draw(screen)
         enemy_list.draw(screen)
-        assets_group.draw(screen)
 
         player.react()
         player.render(screen)

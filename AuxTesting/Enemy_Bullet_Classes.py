@@ -49,15 +49,17 @@ class Enemy(pygame.sprite.Sprite):
         return "Enemy"
 
 class HealthBar(pygame.sprite.Sprite):
-    def __init__(self, assets_group):
+    def __init__(self):
         self.maxHealth = 1000
         self.currentHealth = 1000
         self.image = pygame.Surface([100, 30])
         self.image.fill(RED)
-        assets_group.add(self)
-    def update(self, tank):
+    def update(self, tank, screen):
         self.currentHealth = tank.health
         self.image = pygame.Surface([100, 30 * currentHealth / maxHealth])
+        assets_group = pygame.sprite.Group()
+        assets_group.add(self)
+        assets_group.draw(screen)
     
         
 
