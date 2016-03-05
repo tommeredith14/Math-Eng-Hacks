@@ -286,8 +286,7 @@ def main():
         pygame.display.flip()
         clock.tick(20)
         
-    pygame.quit()
-main()
+    pygame.quit().main()
 
     
     
