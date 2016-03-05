@@ -163,7 +163,7 @@ class Map():
 
 
 
-screen = pygame.display.set_mode(SCREEN_DIMS)#,pygame.FULLSCREEN)
+screen = pygame.display.set_mode(SCREEN_DIMS,pygame.FULLSCREEN)
 pygame.display.set_caption("ARCADE")
 clock=pygame.time.Clock()
 
@@ -205,11 +205,34 @@ def main():
                 tilelist[i]=1
             elif (i>1040 and i<1092) or (i>676 and i<728) :
                 tilelist[i]=3
+                
+    def map_official(tilelist):
+        for i in range(0,1560):
+            tilelist.append(0)
+            if i<53 or i>1508 or i%52==0 or i%52==51:
+                tilelist[i]=1
+            elif i>212 and i<235 or i>414 and i<434:
+                tilelist[i]=1
+            elif i>433 and i<443:
+                tilelist[i]=4
+            elif i%52==26 and i<446 and i>235:
+                tilelist[i]=4
+            elif i%52 == 30 and (i//52)%4==0:
+                tilelist[i]=3
+            elif i%52%6==0 and i//52 >46:
+                tilelist[i]=1
+            elif (i//52) ==20 and (i%52)>20 and i%52<40:
+                tilelist[i]=1
+            elif (i//52>5 and i//52<17) and (i%52 >35 and i%52<40) or (i//52>13 and i//52<17 and i%52>36 and i%52<46):
+                tilelist[i]=4
+            elif (i%52%8 == 0) and (i//52>11 and i//52<21) and i%52<20:
+                tilelist[i]=1
+                tilelist[i-4]=3
 
 
     
     
-    map_one(tilelist)
+    map_official(tilelist)
     backgroundmap = Map(tilelist)
     backgroundmap.draw_map()
 
