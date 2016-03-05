@@ -186,7 +186,7 @@ def main():
             if hit_list[key][0].sType != key.getType():
                 key.do_damage(10)
                 print("Damage")
-        hit_list=pygame.sprite.spritecollide(player, bullet_list,0,1)
+        hit_list=pygame.sprite.spritecollide(player, bullet_list,1)
         if hit_list:
             if hit_list[0].shooter.getType() != player.getType():
                 player.health -= 10
