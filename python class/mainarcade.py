@@ -12,7 +12,7 @@ GREEN=[0,255,0]
 BLUE =[0,0,255]
 BROWN = [139,69,19]
 
-SCREEN_DIMS = [1560,780]
+SCREEN_DIMS = [1560,900]
 SCALE_FACTOR = 0.5
 TILE_DIMS = [30,30]
 OBSTACLE_PNG=["grasstile.png", "bricktile.png","fence.png", "tnttile.png","watertile.png"]
@@ -69,7 +69,7 @@ class Map():
 
 
 
-screen = pygame.display.set_mode(SCREEN_DIMS) #pygame.FULLSCREEN)
+screen = pygame.display.set_mode(SCREEN_DIMS)#,pygame.FULLSCREEN)
 pygame.display.set_caption("ARCADE")
 clock=pygame.time.Clock()
 
@@ -80,11 +80,39 @@ def main():
     
     screen.fill(GREY)
     tilelist=[]
-    for i in range(0,1352):
+    def map_one(tilelist):
         
-        tilelist.append(random.randint(0,4))
-        if i<53 or i>1300 or i%52==0 or i%52==51:
-            tilelist[i]=1
+        for i in range(0,1560):
+            tilelist.append(0)
+            if i<53 or i>1508 or i%52==0 or i%52==51:
+                tilelist[i]=1
+            elif i%52 == 5 and i<1000:
+                tilelist[i]=2
+            elif i%52 >20 and i%52<28 and i>500 and i<1000 :
+                tilelist[i]=4
+            elif i%52>20 and i<700 and i>599 :
+                tilelist[i]=4
+                if i%52 >40 and i%52 <44:
+                    tilelist[i]=2
+                elif i%52==40 or i%52==44:
+                    tilelist[i]=1
+            elif ((i%52==11) or (i%52==15)) and (i>400 and i<1200):
+                tilelist[i] =1
+            else:
+                num=random.randint(0,100)
+                if num>99:
+                    tilelist[i]=3
+    def map_two(tilelist):
+        for i in range(0,1560):
+            tilelist.append(0)
+            if (i<53 or i>1508 or i%52==0 or i%52==51) :
+                tilelist[i]=1
+            elif (i%52%3==0 and i%52%6==0) and not(i>730 and i<1000) and not (i%52==48):
+                tilelist[i]=1
+            elif (i>1040 and i<1092) or (i>676 and i<728) :
+                tilelist[i]=3
+                
+    map_one(tilelist)
     backgroundmap = Map(tilelist)
     backgroundmap.draw_map()
 
