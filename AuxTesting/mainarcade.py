@@ -353,8 +353,8 @@ def main():
         
         count+=1
 
-        pygame.draw.rect(screen, RED, (650, 15, 200 * (player.health / 1000), 30))
-        pygame.draw.rect(screen, RED, (650, 15, 200, 30), 5)
+        pygame.draw.rect(screen, RED, (650, 45, 200 * (player.health / 1000), 30))
+        pygame.draw.rect(screen, RED, (650, 45, 200, 30), 5)
         
         pygame.display.flip()
         clock.tick(20)
