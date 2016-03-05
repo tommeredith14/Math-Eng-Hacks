@@ -54,7 +54,7 @@ class HealthBar(pygame.sprite.Sprite):
         self.image = pygame.Surface([100, 30])
         self.image.fill = [255, 0, 0]
         assets_group.add(self)
-    def update(self, tank)
+    def update(self, tank):
         self.currentHealth = tank.health
         self.image = pygame.Surface([100, 30 * currentHealth / maxHealth])
     
