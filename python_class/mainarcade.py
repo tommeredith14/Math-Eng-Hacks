@@ -233,6 +233,8 @@ def main():
         if count%7==0:
             enemy2.fireBullet()
         
+        player.update()        
+        
             
         bullet_list.update()
         enemy_list.update()
@@ -249,7 +251,8 @@ def main():
         drowning_object.draw(screen)
         bullet_list.draw(screen)
         enemy_list.draw(screen)
-        player.update(immutable_object, destructible_object)
+
+        player.react()
         player.render(screen)
         
         count+=1
