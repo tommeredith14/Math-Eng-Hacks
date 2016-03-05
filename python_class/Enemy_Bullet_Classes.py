@@ -209,13 +209,13 @@ class Tank(pygame.sprite.Sprite):
                 self.speedx /= 2
                 self.speedy /= 2
             if (self.coll_Drowning):
-                self.damage -= 2
+                self.health -= 2
                 speedx *= 0.8
                 speedy *= 0.8
                 self.coll_Fire = False
             if (self.coll_Fire):
-                self.damage -= 5
-            if (self.damage <= 0):
+                self.health -= 5
+            if (self.health <= 0):
                 self.still_alive = False
 
             
