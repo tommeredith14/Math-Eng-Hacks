@@ -1,40 +1,13 @@
-#!/usr/bin/python
-import serial
-import time
-import math
 import pygame
 import random
-ser = serial.Serial('/dev/ttyACM1', 9600)
-
 pygame.init()
 import Enemy_Bullet_Classes
 from Enemy_Bullet_Classes import *
 #pygame.mixer.music.load('Cave_Story')
-
-#Colours
-BLACK = [  0,  0,  0]
-GREY = [122, 79, 79]
-WHITE = [255,255,255]
-RED = [255,  0,  0]
-PURPLE = [153,0,153]
-GREEN=[0,255,0]
-BLUE =[0,0,255]
-BROWN = [139,69,19]
-
-SCREEN_DIMS = [1560,900]
-SCALE_FACTOR = 0.5
-TILE_DIMS = [30,30]
-OBSTACLE_PNG=["grasstile.png", "bricktile.png","fence.png", "tnttile.png","watertile.png","fire.png"]
-TILE_TYPE=[0,1,2,3,4,5]
-
-RESPONSE = 0.004
-
-immutable_object=pygame.sprite.Group()
-destructible_object=pygame.sprite.Group()
-bystander_object=pygame.sprite.Group()
-explosive_object=pygame.sprite.Group()
-drowning_object=pygame.sprite.Group()
-fire_object=pygame.sprite.Group()
+#import Geoff.py
+import serial
+import time
+ser = serial.Serial('/dev/ttyACM1', 9600)
 
 Input = [0, 0, 0, 0, 0, 0]
 print('Horizontal   Vertical  Shooting  Steering   Other   Pause')
@@ -51,170 +24,34 @@ def Update(Input): #UPDATES DATA READINGS
             Input[3] = str(rawArray[3])
             Input[4] = int(rawArray[4])
             Input[5] = int(rawArray[5])
+            return
 
 
+#Colours
+BLACK = [  0,  0,  0]
+GREY = [122, 79, 79]
+WHITE = [255,255,255]
+RED = [255,  0,  0]
+PURPLE = [153,0,153]
+GREEN=[0,255,0]
+BLUE =[0,0,255]
+BROWN = [139,69,19]
+START_X = 800
+START_Y = 300
 
+SCREEN_DIMS = [1560,900]
+SCALE_FACTOR = 0.5
+TILE_DIMS = [30,30]
+OBSTACLE_PNG=["grasstile.png", "bricktile.png","fence.png", "tnttile.png","watertile.png","fire.png"]
+TILE_TYPE=[0,1,2,3,4,5]
 
-
-#val1 = ser.readline().strip() #reads all input at once as a string
-#if (len(val1) != 0):          #makes sure not empty
-#    testArray = str(val1).split(' ')    #generates array with ' ' delimiter
-#    if (len(testArray) == 6):           #gets
-#        print (testArray)
-#       time.sleep(1)print('Reading...')
-
-
-
-clock = pygame.time.Clock()
-
-class Turret(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.init()
-        pygame.sprite.Sprite.__init__(self)
-
-# Sets up the image and Rect
-        self.image = pygame.image.load("tankGun.png").convert_alpha()
-        self.image.set_colorkey([0,0,0,0])
-        self.rect = self.image.get_rect()
-        self.rect.centerx = size[0] / 2
-        self.rect.centery = size[1] / 2
-        self.image2 = self.image
-
-    def update(self, xpos, ypos, angle):
-        self.rect.centerx = xpos
-        self.rect.centery = ypos
-        self.image = pygame.transform.rotate(self.image2, angle)
-        self.rect = self.image.get_rect(center=self.rect.center)
-
-class Tank(pygame.sprite.Sprite):
-    def __init__(self, bullet_list):
-        pygame.init()
-        pygame.sprite.Sprite.__init__(self)
-        
-        self.still_alive = True # It was a triumph.
-
-# Sets up the image and Rect
-        self.image = pygame.image.load("Chassis.png").convert_alpha()
-        self.image.set_colorkey([0,0,0,0])
-        self.rect = self.image.get_rect()
-        self.rect.centerx = size[0] / 2
-        self.rect.centery = size[1] / 2
-        self.image2 = self.image
-        self.angle = 0
-        self.speedx = -600
-        self.speedy = 300
-        self.accelx = 78
-        self.accely = -38.0
-        self.bullet_list = bullet_list
-
-        self.turret = Turret()
-        self.turret_rot = 0
-        self.turret_angle = 200
-    
-    def getType():
-        return "Player"
-
-
-    def firebullet(self):
-        fire_angle = angle + turret_angle # angle in degrees
-        
-        
-
-    def inputFromController(self, xjoy, yjoy, turret_rot):
-        self.accelx = xjoy
-        self.accely = yjoy
-        if (turret_rot == "L"):
-            self.turret_rot = 1
-        elif (turret_rot == "R"):
-            self.turret_rot = -1
-        else:
-            self.turret_rot = 0
-
-
-    def collideImmutable(self, immutable_list):
-        immutCollisionList = pygame.sprite.spritecollide(self, immutable_list, False)
-
-        if not immutCollisionList:
-            return False
-        else:
-            return True
-    
-
-    def collideDestructable(self, destructable_list):
-        destructCollisionList = pygame.sprite.spritecollide(self, destructable_list, True)
-
-        if not destructCollisionList:
-           return 0
-        elif (self.speedx / math.cos(self.playerAngle) > 500):
-            self.speed.x = 0
-            self.speed.y = 0
-            return 1
-        else:
-            return 2
-
-    def rotate(self):
-        self.image = pygame.transform.rotate(self.image2, self.angle)
-        self.rect = self.image.get_rect(center=self.rect.center)
-
-
-    def update(self, immutable_list, destructable_list):
-
-        if self.still_alive:
-        
-            self.turret_angle += 10 * self.turret_rot
-            
-            self.rotate()
-            
- #           self.turret_angle += 30
-            
- #           self.angle -=10
-            
-            oldxpos = self.rect.centerx
-            oldypos = self.rect.centery
-
-            self.speedx += self.accelx
-            self.speedy += self.accely
-
-            self.speedx *= 0.95
-            self.speedy *= 0.95
-
-            self.rect.centerx += self.speedx * RESPONSE
-            self.rect.centery += self.speedy * RESPONSE
-
-            self.angle = math.atan2(self.speedx, self.speedy) * 180 / math.pi
-
-            #self.image = pygame.transform.rotate(self.image2, self.angle)
-
-            if (self.collideImmutable(immutable_list) or self.collideDestructable(destructable_list) == 2):
-                self.rect.centerx = oldxpos
-                self.rect.centery = oldypos
-                self.speedx = 0
-                self.speedy = 0
-
-            self.turret.update(self.rect.centerx, self.rect.centery, self.angle + self.turret_angle)
-
-    def render(self):
- #       screen.blit(self.image, (self.rect))
- #       screen.blit(self.turret.image, (self.turret.rect))
- 
-        rendering = pygame.sprite.Group()
-        rendering2 = pygame.sprite.Group()
-        rendering.add(self)
-        rendering2.add(self.turret)
-        rendering.draw(screen)
-        rendering2.draw(screen)
-
-
-
-
-
-
-
-
-
-
-
-
+immutable_object=pygame.sprite.Group()
+destructible_object=pygame.sprite.Group()
+bystander_object=pygame.sprite.Group()
+explosive_object=pygame.sprite.Group()
+drowning_object=pygame.sprite.Group()
+fire_object=pygame.sprite.Group()
+assets_group=pygame.sprite.Group()
 
 
 class Tile(pygame.sprite.Sprite):
@@ -345,35 +182,90 @@ def main():
 
         hit_list=pygame.sprite.groupcollide(enemy_list, bullet_list,0,1)
         for key in hit_list:
-            key.do_damage(10)
             
-            
+            if hit_list[key][0].sType != key.getType():
+                key.do_damage(10)
+                print("Damage")
 
+    def enemy_collisions(enemy_list):
+        hit_list=pygame.sprite.groupcollide(enemy_list,immutable_object,0,0)
+        for key in hit_list:
+            
+            key.xSpeed = random.uniform(-2,2)
+            key.ySpeed = random.uniform(-2,2)
+        hit_list=pygame.sprite.groupcollide(enemy_list,destructible_object,0,0)
+        for key in hit_list:
+            
+            key.xSpeed = random.uniform(-2,2)
+            key.ySpeed = random.uniform(-2,2)
+    def player_collisions():
+        hit_list = pygame.sprite.spritecollide(player,immutable_object,0)
+        if hit_list:
+            player.coll_Immutable = True
+        else:
+            player.coll_Immutable = False
+        hit_list = pygame.sprite.spritecollide(player,destructible_object,0)
+        if hit_list:
+            for i in hit_list:
+                destructible_object.remove(i)
+                i.switchType(0)
+                bystander_object.add(i)
+            player.coll_Destructible = True
+        else:
+            player.coll_Destructible = False
+        hit_list = pygame.sprite.spritecollide(player,explosive_object,0)
+        if hit_list:
+            for i in hit_list:
+                explosive_object.remove(i)
+                i.switchType(5)
+                fire_object.add(i)
+            player.coll_Explosion = True
+        else:
+            player.coll_Explosion = False            
+        hit_list = pygame.sprite.spritecollide(player,fire_object,0)
+        if hit_list:
+            player.coll_Fire = True
+        else:
+            player.coll_Fire = False
+        hit_list = pygame.sprite.spritecollide(player,drowning_object,0)
+        if hit_list:
+            player.coll_Drowning = True
+        else:
+            player.coll_Drowning = False
+            
     bullet_list=pygame.sprite.Group()
     enemy_list=pygame.sprite.Group()
     enemy=Enemy(100,100,enemy_list,bullet_list,2)
     count=0
     enemy2=Enemy(300,100,enemy_list,bullet_list,4)
-   
+    player = Tank(bullet_list, START_X, START_Y)
+    
+    healthBar = HealthBar(pygame.sprite.Sprite)
     
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-        if count%10==0:
-            enemy.fireBullet()
-        if count%7==0:
-            enemy2.fireBullet()
-
         Update(Input)
-    
-        tank.inputFromController(Input[0], Input[1], Input[3])
+        player.inputFromController(Input[0], Input[1], Input[3])
+        
+        healthBar.update(player)
+        
+        player.update()        
         
             
         bullet_list.update()
         enemy_list.update()
-        bullet_collisions(bullet_list, enemy_list)
+        if count%10==0:
+            enemy.fireBullet()
+        if count%7==0:
+            enemy2.fireBullet()
+        if Input[2] == 1:
+            player.firebullet()
         
+        bullet_collisions(bullet_list, enemy_list)
+        enemy_collisions(enemy_list)
+        player_collisions()
         bullet_list.draw(screen)
         enemy_list.draw(screen)
         
@@ -384,10 +276,10 @@ def main():
         drowning_object.draw(screen)
         bullet_list.draw(screen)
         enemy_list.draw(screen)
+        assets_group.draw(screen)
 
-        
-        tank.update(immutable_object, destructible_object)
-        tank.render()
+        player.react()
+        player.render(screen)
         
         count+=1
         

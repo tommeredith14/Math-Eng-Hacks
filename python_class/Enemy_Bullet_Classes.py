@@ -4,6 +4,7 @@ import random
 
 RESPONSE = 0.004
 WHITE = [255,255,255]
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self,x_pos, y_pos, enemy_list, bullet_list,speed=None):
         super().__init__()
@@ -45,6 +46,19 @@ class Enemy(pygame.sprite.Sprite):
             self.remove()
     def getType(self):
         return "Enemy"
+
+class HealthBar(pygame.sprite.Sprite):
+    def __init__(self, assets_group):
+        self.maxHealth = 1000
+        self.currentHealth = 1000
+        self.image = pygame.Surface([100, 30])
+        self.image.fill = [255, 0, 0]
+        assets_group.add(self)
+    def update(self, tank)
+        self.currentHealth = tank.health
+        self.image = pygame.Surface([100, 30 * currentHealth / maxHealth])
+    
+        
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, speed, x_pos, y_pos, angle, bullet_list,shooter):
