@@ -79,14 +79,6 @@ GPIO.output(Buzzer, GPIO.LOW)
 HealthLevel = 1
 SetLights(HealthLevel)
 
-def loop():
-    while 1:
-        if (HealthLevel <= 1):
-            #see if buzzer should be on or off (every half second)
-            if (int((time.clock()*10))%2 == 0):
-                GPIO.output(Buzzer, GPIO.HIGH)
-            else:
-                GPIO.output(Buzzer, GPIO.LOW)
             
 #time.sleep(2)
 #SetLights(3)
