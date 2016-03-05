@@ -37,7 +37,8 @@ class Tank(pygame.sprite.Sprite):
 
 # Sets up the image and Rect
         self.still_alive = True # It was a triumph.
-        self.bitmap = pygame.image.load("Chassis.png").convert_alpha()
+        self.health = 80
+        self.bitmap = pygame.image.load("Chassis.png")#.convert_alpha()
         self.bitmap.set_colorkey((255,255,255))
         self.rect = self.bitmap.get_rect()
         self.rect.centerx = size[0] / 2
@@ -53,6 +54,11 @@ class Tank(pygame.sprite.Sprite):
         self.turret = Turret()
         self.turret_rot = 0
         self.turret_angle = 200
+
+    def doDamage(self, damage):
+        self.health -= damage
+        if (damage <= 0):
+            self.still_alive = False
 
 
     def firebullet(self):

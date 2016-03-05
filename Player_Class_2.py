@@ -22,18 +22,18 @@ class Turret(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
 # Sets up the image and Rect
-        self.bitmap = pygame.image.load("tankGun.png").convert_alpha()
-        self.bitmap.set_colorkey((255,255,255))
-        self.rect = self.bitmap.get_rect()
+        self.image = pygame.image.load("tankGun.png").convert_alpha()
+        self.image.set_colorkey((255,255,255))
+        self.rect = self.image.get_rect()
         self.rect.centerx = size[0] / 2
         self.rect.centery = size[1] / 2
-        self.bitmap2 = self.bitmap
+        self.image2 = self.image
 
     def update(self, xpos, ypos, angle):
         self.rect.centerx = xpos
         self.rect.centery = ypos
-        self.bitmap = pygame.transform.rotate(self.bitmap2, angle)
-        self.rect = self.bitmap.get_rect(center=self.rect.center)
+        self.image = pygame.transform.rotate(self.image2, angle)
+        self.rect = self.image.get_rect(center=self.rect.center)
 
 class Tank(pygame.sprite.Sprite):
     def __init__(self, bullet_list):
@@ -43,13 +43,13 @@ class Tank(pygame.sprite.Sprite):
         self.still_alive = True # It was a triumph.
 
 # Sets up the image and Rect
-        self.bitmap = pygame.image.load("Chassis.png").convert_alpha()
-        self.bitmap.set_colorkey((255,255,255))
-        self.rect = self.bitmap.get_rect()
+        self.image = pygame.image.load("TestPic.png").convert_alpha()
+        self.image.set_colorkey((255,255,255))
+        self.rect = self.image.get_rect()
         self.rect.centerx = size[0] / 2
         self.rect.centery = size[1] / 2
-        self.bitmap2 = self.bitmap
-        self.angle = 140
+        self.image2 = self.image
+        self.angle = 0
         self.speedx = 1.0
         self.speedy = 1.0
         self.accelx = 2.0
@@ -94,8 +94,8 @@ class Tank(pygame.sprite.Sprite):
             return 2
 
     def rotate(self):
-        self.bitmap = pygame.transform.rotate(self.bitmap2, self.angle)
-        self.rect = self.bitmap.get_rect(center=self.rect.center)
+        self.image = pygame.transform.rotate(self.image2, self.angle)
+        self.rect = self.image.get_rect(center=self.rect.center)
 
 
     def update(self, immutable_list, destructable_list):
@@ -106,9 +106,9 @@ class Tank(pygame.sprite.Sprite):
             
             self.rotate()
             
-            self.turret_angle += 30
+ #           self.turret_angle += 30
             
-            self.angle -=15
+            self.angle -=10
             
             oldxpos = self.rect.centerx
             oldypos = self.rect.centery
@@ -125,7 +125,7 @@ class Tank(pygame.sprite.Sprite):
             if (self.speedx > 200 or self.speedy > 200):
                 self.angle = math.atan2(self.speedx, self.speedy) * 180 / math.pi
 
-            #self.bitmap = pygame.transform.rotate(self.bitmap2, self.angle)
+            #self.image = pygame.transform.rotate(self.image2, self.angle)
 
             if (self.collideImmutable(immutable_list) or self.collideDestructable(destructable_list) == 2):
                 self.rect.centerx = oldxpos
@@ -136,11 +136,19 @@ class Tank(pygame.sprite.Sprite):
             self.turret.update(self.rect.centerx, self.rect.centery, self.angle + self.turret_angle)
 
     def render(self):
-        screen.blit(self.bitmap, (self.rect))
-        screen.blit(self.turret.bitmap, (self.turret.rect))
+ #       screen.blit(self.image, (self.rect))
+ #       screen.blit(self.turret.image, (self.turret.rect))
+ 
+        rendering = pygame.sprite.Group()
+        rendering2 = pygame.sprite.Group()
+        rendering.add(self)
+        rendering2.add(self.turret)
+        rendering.draw(screen)
+        #rendering2.draw(screen)
+        
 
 
-screen.fill(WHITE)
+
 
 tank = Tank(14)
 
@@ -149,6 +157,8 @@ destruct = pygame.sprite.Group()
 
 done = False
 while done == False:
+    
+    screen.fill(WHITE)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
