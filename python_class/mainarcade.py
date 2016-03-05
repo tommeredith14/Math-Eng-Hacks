@@ -180,12 +180,12 @@ def main():
             key.switchType(5)
             bystander_object.add(key)
 
-        hit_list=pygame.sprite.groupcollide(enemy_list, bullet_list,0,1)
+        hit_list=pygame.sprite.groupcollide(enemy_list, bullet_list,0,0)
         for key in hit_list:
             
             if hit_list[key][0].sType != key.getType():
                 key.do_damage(10)
-                print("Damage")
+                bullet_list.remove(hit_list[key])
         hit_list=pygame.sprite.spritecollide(player, bullet_list,0)
         if hit_list:
             if hit_list[0].sType != player.getType():
